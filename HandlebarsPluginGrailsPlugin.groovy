@@ -4,7 +4,7 @@ import com.navent.handlebars.utils.I18nSpringMessageSource
 
 class HandlebarsPluginGrailsPlugin {
     // the plugin version
-    def version = "0.1"
+    def version = "1.0"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.4 > *"
     // resources that are excluded from plugin packaging
@@ -54,13 +54,13 @@ It provides:
 			source = ref('messageSource')
 		}
 		
-		//este bean ofrece una implementacion por default de la interfaz LacaleResolver de Jawr, utilizado por el helper i18n de handlebars
+		//este bean ofrece una implementacion por default del localeResolver, utilizado por el helper i18n de handlebars
 		//el mismo puede ser reemplazado por una implementacion custom en la aplicacion que utilice este plugin
 		//simplemente definiendo el bean de nombre 'localeResolver' a nivel de aplicacion
-		localeResolver(DefaultJawrLocaleResolver) {
-			defaultLocale = new Locale("es","AR")
-			java.util.Locale.setDefault(defaultLocale)
-		}
+		localeResolver(org.springframework.web.servlet.i18n.SessionLocaleResolver) {
+	      defaultLocale = new Locale("es","AR")
+	      java.util.Locale.setDefault(defaultLocale)
+	   }
 	}
 
     def doWithDynamicMethods = { ctx ->

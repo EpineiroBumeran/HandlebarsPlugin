@@ -16,6 +16,12 @@ grails.project.fork = [
     console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
 ]
 
+//para publicar el plugin
+grails.project.repos.default = "nexusNavent"
+grails.project.repos.nexusNavent.url = "http://nexus.navent.biz:8081/nexus/content/repositories/releases/"
+grails.project.repos.nexusNavent.username = "deployment"
+grails.project.repos.nexusNavent.password = "n4v3ntd3v"
+
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -51,8 +57,7 @@ grails.project.dependency.resolution = {
     }
 
     plugins {
-        build(":release:3.1.1",
-              ":rest-client-builder:2.1.1") {
+        build(":release:3.1.1", ":rest-client-builder:2.1.1") {
             export = false
         }
 		

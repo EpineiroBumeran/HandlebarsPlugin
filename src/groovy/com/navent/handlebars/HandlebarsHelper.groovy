@@ -52,6 +52,10 @@ class HandlebarsHelper {
 			public CharSequence apply(String src, Options options) {
 				
 				def jawr = Holders.grailsApplication.mainContext.getBean("JawrTagLib");
+				if(!jawr) {
+					throw new Exception('JAWR plugin is not installed in the application')
+				}
+				
 				return new Handlebars.SafeString(jawr.script(src: src))
 			}
 		});
