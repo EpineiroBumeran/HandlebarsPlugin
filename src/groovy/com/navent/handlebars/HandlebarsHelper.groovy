@@ -14,6 +14,7 @@ import asset.pipeline.grails.AssetsTagLib
 import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.Helper
 import com.github.jknack.handlebars.Options
+import com.github.jknack.handlebars.cache.HighConcurrencyTemplateCache
 import com.github.jknack.handlebars.io.FileTemplateLoader
 
 @Singleton
@@ -42,7 +43,7 @@ class HandlebarsHelper {
 	}
 	
 	private void init() {
-		this.handlebars = new Handlebars(new FileTemplateLoader(getTemplatesBaseDir(),".html"))
+		this.handlebars = new Handlebars(new FileTemplateLoader(getTemplatesBaseDir(),".html")).with(new HighConcurrencyTemplateCache())
 	
 		/*
 		 * Registra el helper "jawr" que permite invocar en handlebars el comportamiento del tag <jawr:script src="/bundles/yui.js"  /> del jawr plugin
