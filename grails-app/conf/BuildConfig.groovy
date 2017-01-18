@@ -51,7 +51,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.27'
 		
 		//MUSTACHE
-		compile 'com.github.jknack:handlebars:4.0.0', {
+		compile 'com.github.jknack:handlebars:4.0.6','com.github.jknack:handlebars-helpers:4.0.6', {
 			excludes  "rhino"
 		}
     }
@@ -61,8 +61,10 @@ grails.project.dependency.resolution = {
             export = false
         }
 		
+		
+		
 		//necesario para compilar, pero no lo distribuimos
-		provided(':asset-pipeline:2.1.5') {
+		compile(':asset-pipeline:2.1.5') {
 			export = false
 		}
 		

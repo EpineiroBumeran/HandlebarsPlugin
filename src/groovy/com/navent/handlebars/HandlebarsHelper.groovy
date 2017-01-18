@@ -15,6 +15,7 @@ import com.github.jknack.handlebars.Handlebars
 import com.github.jknack.handlebars.Helper
 import com.github.jknack.handlebars.Options
 import com.github.jknack.handlebars.cache.ConcurrentMapTemplateCache
+import com.github.jknack.handlebars.helper.AssignHelper;
 import com.github.jknack.handlebars.io.FileTemplateLoader
 
 @Singleton
@@ -50,6 +51,8 @@ class HandlebarsHelper {
 		else {
 			this.handlebars = new Handlebars(new FileTemplateLoader(getTemplatesBaseDir(),".html"))
 		}
+		
+		this.handlebars.registerHelper(AssignHelper.NAME, AssignHelper.INSTANCE)
 	
 		/*
 		 * Registra el helper "jawr" que permite invocar en handlebars el comportamiento del tag <jawr:script src="/bundles/yui.js"  /> del jawr plugin
@@ -89,6 +92,18 @@ class HandlebarsHelper {
 				def asset = Holders.grailsApplication.mainContext.getBean(AssetsTagLib.class.name);
 				def media = options.hash('media')
 				return new Handlebars.SafeString(asset.stylesheet (src: src, media: media ? media: 'screen'))
+			}
+		});
+	
+		/*
+		 * Registra el helper "image" que permite invocar en handlebars el comportamiento del tag <asset:image src="grails_logo.png" alt="Grails"/> del Asset pipeline plugin
+		 */
+		this.handlebars.registerHelper("imgSrc", new Helper<String>() {
+			
+			public CharSequence apply(String src, Options options) {
+				
+				def asset = Holders.grailsApplication.mainContext.getBean(AssetsTagLib.class.name);
+				return new Handlebars.SafeString("src=\"${asset.assetPath(src: src)}\"")
 			}
 		});
 	
