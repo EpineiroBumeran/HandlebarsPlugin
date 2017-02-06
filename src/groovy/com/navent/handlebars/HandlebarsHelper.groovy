@@ -107,6 +107,24 @@ class HandlebarsHelper {
 			}
 		});
 	
+		this.handlebars.registerHelper("href", new Helper<String>() {
+			
+			public CharSequence apply(String href, Options options) {
+				
+				def asset = Holders.grailsApplication.mainContext.getBean(AssetsTagLib.class.name);
+				return new Handlebars.SafeString("href=\"${asset.assetPath(src: href)}\"")
+			}
+		});
+	
+		this.handlebars.registerHelper("path", new Helper<String>() {
+			
+			public CharSequence apply(String path, Options options) {
+				
+				def asset = Holders.grailsApplication.mainContext.getBean(AssetsTagLib.class.name);
+				return new Handlebars.SafeString("\"${asset.assetPath(src: path)}\"")
+			}
+		});
+	
 	
 		/*
 		 * Registra el helper "formato_fecha" para formatear una fecha {{formatear_fecha fecha formatoEntrada formatoSalida locale}}
