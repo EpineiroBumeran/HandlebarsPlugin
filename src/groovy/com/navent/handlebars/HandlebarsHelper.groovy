@@ -1,5 +1,6 @@
 package com.navent.handlebars
 
+import com.navent.handlebars.utils.LocaleThreadLocal
 import grails.util.Holders
 
 import java.text.SimpleDateFormat
@@ -216,7 +217,12 @@ class HandlebarsHelper {
 						throw new Exception('Bean implementing LocaleResolver not found in application classpath')
 					}
 					
-					Locale defaultLocale = localeResolver.resolveLocale(WebUtils.retrieveGrailsWebRequest().getRequest())
+					Locale defaultLocale
+					try {
+						defaultLocale = localeResolver.resolveLocale(WebUtils.retrieveGrailsWebRequest().getRequest())
+					} catch (all) {
+						defaultLocale = LocaleThreadLocal.get()
+					}
 				    Locale locale = LocaleUtils.toLocale((String) options.hash("locale", defaultLocale.toString()))
 					def localSource = Holders.grailsApplication.mainContext.getBean("i18nMessageSource")
 				   
